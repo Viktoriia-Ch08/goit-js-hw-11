@@ -55,13 +55,15 @@ function onLoadMore() {
 
 function getNotificationOfImgsAmount(hits, total) {
   shownImagesQuantity += hits.length;
+  console.log(shownImagesQuantity);
+  console.log(total);
 
   if (shownImagesQuantity < total) {
     Notify.success(`Hooray! We found ${total} images !!!`);
     loadBtn.classList.remove('is-hidden');
   }
 
-  if (shownImagesQuantity === total) {
+  if (shownImagesQuantity >= total) {
     loadBtn.classList.add('is-hidden');
     Notify.info("We're sorry, but you've reached the end of search results.");
   }
