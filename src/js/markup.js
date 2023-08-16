@@ -1,29 +1,52 @@
 import { galleryEl } from './refs';
+import SimpleLightbox from 'simplelightbox';
+import 'simplelightbox/dist/simple-lightbox.min.css';
 
-function markupGallery(array) {
-  //   galleryEl.innerHTML = '';
+let lightbox = new SimpleLightbox('.photo-card a', {
+  captions: true,
+  captionsData: 'alt',
+  captionDelay: 250,
+  captionPosition: 'bottom',
+});
 
-  galleryEl.innerHTML = array
-    .map(el => {
-      return `<div class="photo-card">
-  <img src="${el.webformatURL}" alt="${el.tags}" loading="lazy" />
+function appendMarkupGallery(array) {
+  const galleryMarkup = array
+    .map(
+      ({
+        largeImageURL,
+        webformatURL,
+        tags,
+        likes,
+        views,
+        comments,
+        downloads,
+      }) => {
+        return `<div class="photo-card">
+  <a class="gallery__link" href="${largeImageURL}"><img class="gallery__image" src="${webformatURL}" alt="${tags}" width="400" loading="lazy"/></a>
   <div class="info">
     <p class="info-item">
-      <b>Likes: ${el.likes}</b>
+      <b>Likes </b>
+      ${likes}
     </p>
     <p class="info-item">
-      <b>Views: ${el.views}</b>
+      <b>Views </b>
+      ${views}
     </p>
     <p class="info-item">
-      <b>Comments: ${el.comments}</b>
+      <b>Comments </b>
+      ${comments}
     </p>
     <p class="info-item">
-      <b>Downloads: ${el.downloads}</b>
+      <b>Downloads </b>
+      ${downloads}
     </p>
   </div>
 </div>`;
-    })
+      }
+    )
     .join('');
+  galleryEl.insertAdjacentHTML('beforeend', galleryMarkup);
+  lightbox.refresh();
 }
 
-export { markupGallery };
+export { appendMarkupGallery };
