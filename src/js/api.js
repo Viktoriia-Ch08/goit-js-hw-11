@@ -7,6 +7,8 @@ export default class ImagesApiService {
     this.page = 1;
     this.searchQuery = '';
     this.PER_PAGE = 40;
+    this.shownImages = 0;
+    this.total = 0;
   }
 
   async fetchImages() {
@@ -22,6 +24,11 @@ export default class ImagesApiService {
 
     const response = await axios.get(`${BASE_URL}?${params}`);
     const data = response.data;
+    this.shownImages += data.hits.length;
+    this.total = data.total;
+
+    console.log(`Shown ${this.shownImages}`);
+    console.log(`Total ${this.total}`);
     return data;
   }
 
@@ -31,6 +38,10 @@ export default class ImagesApiService {
 
   resetPage() {
     this.page = 1;
+  }
+
+  resetShownImages() {
+    this.shownImages = 0;
   }
 
   get query() {
