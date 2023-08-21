@@ -26,9 +26,6 @@ export default class ImagesApiService {
     const data = response.data;
     this.shownImages += data.hits.length;
     this.total = data.total;
-
-    console.log(`Shown ${this.shownImages}`);
-    console.log(`Total ${this.total}`);
     return data;
   }
 
